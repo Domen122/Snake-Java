@@ -10,11 +10,13 @@ public class Engine
 	private static final int UPDATES_PER_SECOND = 5; //Game's tickrate
 	private Canvas canvas;
 	private Board board;
-	
+	private Snek snake;
+
 	private Engine(Canvas canvas) 
 	{
 		this.board = new Board();
 		this.canvas = canvas;
+		snake = new Snek(board);
 	}
 	public void startGame()
 	{
