@@ -1,24 +1,8 @@
-import java.awt.Color;
+public enum TileType {
 
-public  enum TileType 
-{
-	
-	 SNAKE(Color.GREEN),
+	Fruit,
 
-	 FRUIT(Color.RED),
+	SnakeHead,
 
-	 EMPTY(null);
-
-	 private Color tileColor;
-
-	 private TileType(Color color) 
-	 {
-		 this.tileColor = color;
-	 }
-
-	 public Color getColor() 
-	 {
-		 return tileColor;
-	 }
+	SnakeBody
 }
-

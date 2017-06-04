@@ -1,51 +1,77 @@
-import java.awt.Graphics2D;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
-
-public class Board 
-{
-	public static final int TILE_SIZE = 25;
-	public static final int MAP_SIZE = 20;
+public class Board extends JPanel {
+	private static final long serialVersionUID = 7526472295622776147L;
+	public static final int ColumnSize = 25;
+	public static final int RowSize = 25;
+	public static final int TileSize = 20;
+	private Snek snek;
 	private TileType[] tiles;
-	public Board() 
-	{
-		tiles = new TileType[MAP_SIZE * MAP_SIZE];
-		resetBoard();
+
+	public Board(Snek snek) {
+		this.snek = snek;
+		this.tiles = new TileType[RowSize * TileSize];
+
+		setPreferredSize(new Dimension(ColumnSize * TileSize, RowSize * TileSize));
+		setBackground(Color.BLACK);
 	}
-	public void resetBoard() 
-	{
-		for(int i = 0; i < tiles.length; i++) 
-		{
-			tiles[i] = TileType.EMPTY;
+
+	public void resetBoard() {
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i] = null;
 		}
 	}
-	public void setTile(int x, int y, TileType type) 
-	{
-		tiles[y * MAP_SIZE + x] = type;
+
+	public void setTile(Point Pt, TileType type) {
+		setTile(Pt.x, Pt.y, type);
 	}
-	public TileType getTile(int x, int y) 
-	{
-		return tiles[y * MAP_SIZE + x];
+
+	public void setTile(int x, int y, TileType type) {
+		tiles[y * RowSize + x] = type;
 	}
-	public void draw(Graphics2D g) 
-	{
-		g.setColor(TileType.SNAKE.getColor());
-		for(int i = 0; i < MAP_SIZE * MAP_SIZE; i++) 
-		{
-			int x = i % MAP_SIZE;
-			int y = i / MAP_SIZE;
-			if(tiles[i].equals(TileType.EMPTY)) 
-			{
-				continue;
+
+	public TileType getTile(int x, int y) {
+		return tiles[y * RowSize + x];
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int x = 0; x < ColumnSize; x++) {
+			for (int y = 0; y < RowSize; y++) {
+				TileType type = getTile(x, y);
+				if (type != null) {
+					drawTile(x * TileSize, y * TileSize, type, g);
+				}
 			}
-			if(tiles[i].equals(TileType.FRUIT)) 
-			{
-				g.setColor(TileType.FRUIT.getColor());
-				g.fillOval(x * TILE_SIZE + 4, y * TILE_SIZE + 4, TILE_SIZE - 8, TILE_SIZE - 8);
-				g.setColor(TileType.SNAKE.getColor());
-			} else 
-			{
-				g.fillRect(x * TILE_SIZE + 1, y * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+		}
+		g.setColor(Color.DARK_GRAY);
+		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		for (int x = 0; x < ColumnSize; x++) {
+			for (int y = 0; y < RowSize; y++) {
+				g.drawLine(x * TileSize, 0, x * TileSize, getHeight());
+				g.drawLine(0, y * TileSize, getWidth(), y * TileSize);
 			}
+		}
+	}
+
+	private void drawTile(int x, int y, TileType type, Graphics g) {
+		switch (type) {
+		case Fruit:
+			g.setColor(Color.RED);
+			g.fillOval(x + 2, y + 2, TileSize - 4, TileSize - 4);
+			break;
+		case SnakeBody:
+			g.setColor(Color.GREEN);
+			g.fillRect(x, y, TileSize, TileSize);
+			break;
+		case SnakeHead:
+			g.setColor(Color.GREEN);
+			g.fillRect(x, y, TileSize, TileSize);
 		}
 	}
 }
