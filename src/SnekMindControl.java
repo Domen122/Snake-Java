@@ -16,7 +16,7 @@ public class SnekMindControl implements KeyListener
 			{
 				model.updateGame();
 			}
-			view.boardV.repaint();
+			view.refresh();
 			long delta = (System.nanoTime() - start) / 1000000L;
 			if (delta < model.getFrameTime())
 			{
