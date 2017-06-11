@@ -17,6 +17,7 @@ public class Model
 	private boolean pause;
 	private int score;
 	private float score_Mul;
+	private int fruitsCollected;
 	private boolean isNewGame;
 	private boolean isOver = false;
 	private Random random;
@@ -27,6 +28,7 @@ public class Model
 		snek = new Snake();
 		score_Mul = 1.0f;
 		score = 0;
+		fruitsCollected = 0;
 		board = new Board();
 		random = new Random();
 		directions = new LinkedList<Direction>();
@@ -59,6 +61,7 @@ public class Model
 		{
 			score += 100 * score_Mul;
 			score_Mul += 0.1f;
+			fruitsCollected += 1;
 			spawnFruit();
 		} else if (collision == TileType.SnakeBody)
 		{
@@ -221,6 +224,11 @@ public class Model
 		isNewGame = p;
 	}
 
+	public int getFruits()
+	{
+		return fruitsCollected;
+	}
+
 	public int getFrameTime()
 	{
 		return FrameTime;
@@ -241,11 +249,6 @@ public class Model
 		return side;
 	}
 
-	public void changeFrameTime(int a)
-	{
-		FrameTime = a;
-	}
-
 	public int getScore()
 	{
 		return score;
@@ -260,6 +263,7 @@ public class Model
 	{
 		score = 0;
 		score_Mul = 1.0f;
+		fruitsCollected = 0;
 	}
 
 	public boolean isGameOver()

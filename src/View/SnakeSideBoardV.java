@@ -56,6 +56,7 @@ public class SnakeSideBoardV extends JPanel
 
 		int drawY = STATISTICS_OFFSET;
 		g.drawString("Total Score: " + model.getScore(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		g.drawString("Fruits collected: " + model.getFruits(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		String s = new String("");
 		s += model.getScoreMul();
 		s = s.substring(0, 3);

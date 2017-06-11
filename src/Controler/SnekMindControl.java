@@ -19,7 +19,14 @@ public class SnekMindControl implements KeyListener, ActionListener
 	{
 		if (!model.isPaused() && !model.isGameOver())
 		{
+			int oldFruits = model.getFruits();
 			model.updateGame();
+			if (oldFruits != model.getFruits() && model.getFruits() % 8 == 0)
+			{
+				int oldDelay = timer.getDelay();
+				oldDelay *= 0.9;
+				timer.setDelay(oldDelay);
+			}
 		}
 		view.refresh();
 	}
@@ -73,6 +80,7 @@ public class SnekMindControl implements KeyListener, ActionListener
 			{
 				model.resetGame();
 				model.setPaused(false);
+				timer.setDelay(model.getFrameTime());
 			}
 			break;
 		}
