@@ -1,8 +1,13 @@
+package View;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import Model.Board;
+import Model.Model;
+import Model.TileType;
 
 public class SnakeBoardV extends JPanel
 {

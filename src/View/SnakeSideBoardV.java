@@ -1,9 +1,14 @@
+package View;
+
 import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import Model.SideBoard;
+import Model.Model;
+import Model.Board;
 
 public class SnakeSideBoardV extends JPanel
 {
@@ -51,7 +56,10 @@ public class SnakeSideBoardV extends JPanel
 
 		int drawY = STATISTICS_OFFSET;
 		g.drawString("Total Score: " + model.getScore(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
-		g.drawString("Score Multiplier: " + model.getScoreMul(), LARGE_OFFSET, drawY += MESSAGE_STRIDE);
+		String s = new String("");
+		s += model.getScoreMul();
+		s = s.substring(0, 3);
+		g.drawString("Score Multiplier: " + s, LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		drawY = CONTROLS_OFFSET;
 		g.drawString("Move Up: W / Up Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);
 		g.drawString("Move Down: S / Down Arrowkey", LARGE_OFFSET, drawY += MESSAGE_STRIDE);

@@ -1,5 +1,9 @@
+package View;
+
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import Model.Model;
+import Controler.SnekMindControl;
 
 public class SnakeView extends JFrame
 {

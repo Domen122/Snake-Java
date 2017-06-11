@@ -1,12 +1,17 @@
+package Controler;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Model.Model;
+import View.SnakeView;
+import Model.Direction;
 
 public class SnekMindControl implements KeyListener, ActionListener
 {
-	Model model;
+	public Model model;
 	SnakeView view;
 	Timer timer;
 

@@ -1,10 +1,13 @@
+package Model;
+
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.Random;
+import javax.sound.sampled.*;
 
 public class Model
 {
-	private static final int FrameTime = 100;
+	private int FrameTime = 100;
 	public static final int MaxDirections = 3;
 	private static final int SnakeMinLength = 3;
 
@@ -32,70 +35,22 @@ public class Model
 		pause = true;
 	}
 
-	public void setNewGame(boolean p)
+	public void playSound()
 	{
-		isNewGame = p;
-	}
-
-	public int getFrameTime()
-	{
-		return FrameTime;
-	}
-
-	public Board getBoard()
-	{
-		return board;
-	}
-
-	public TileType getTile(int x, int y)
-	{
-		return board.getTile(x, y);
-	}
-
-	public SideBoard getSideBoard()
-	{
-		return side;
-	}
-
-	public int getScore()
-	{
-		return score;
-	}
-
-	public float getScoreMul()
-	{
-		return score_Mul;
-	}
-
-	public void resetScore()
-	{
-		score = 0;
-		score_Mul = 1.0f;
-	}
-
-	public boolean isGameOver()
-	{
-		return isOver;
-	}
-
-	public boolean isNewGame()
-	{
-		return isNewGame;
-	}
-
-	public boolean isPaused()
-	{
-		return pause;
-	}
-
-	public void setPaused(boolean p)
-	{
-		pause = p;
-	}
-
-	public void setOver(boolean p)
-	{
-		isOver = p;
+		try
+		{
+			Clip clip = AudioSystem.getClip();
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource("/Resources/SnakeDeath.wav"));
+			System.out.println(audioInputStream);
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}
 	}
 
 	public void updateGame()
@@ -104,11 +59,12 @@ public class Model
 		if (collision == TileType.Fruit)
 		{
 			score += 100 * score_Mul;
-			score_Mul += 0.1;
+			score_Mul += 0.1f;
 			spawnFruit();
 		} else if (collision == TileType.SnakeBody)
 		{
 			isOver = true;
+			playSound();
 		}
 	}
 
@@ -124,11 +80,6 @@ public class Model
 		directions.clear();
 		directions.add(Direction.UP);
 		spawnFruit();
-	}
-
-	public int getDirSize()
-	{
-		return directions.size();
 	}
 
 	public TileType updateSnake()
@@ -265,4 +216,81 @@ public class Model
 			break;
 		}
 	}
+
+	public void setNewGame(boolean p)
+	{
+		isNewGame = p;
+	}
+
+	public int getFrameTime()
+	{
+		return FrameTime;
+	}
+
+	public Board getBoard()
+	{
+		return board;
+	}
+
+	public TileType getTile(int x, int y)
+	{
+		return board.getTile(x, y);
+	}
+
+	public SideBoard getSideBoard()
+	{
+		return side;
+	}
+
+	public void changeFrameTime(int a)
+	{
+		FrameTime = a;
+	}
+
+	public int getScore()
+	{
+		return score;
+	}
+
+	public float getScoreMul()
+	{
+		return score_Mul;
+	}
+
+	public void resetScore()
+	{
+		score = 0;
+		score_Mul = 1.0f;
+	}
+
+	public boolean isGameOver()
+	{
+		return isOver;
+	}
+
+	public boolean isNewGame()
+	{
+		return isNewGame;
+	}
+
+	public boolean isPaused()
+	{
+		return pause;
+	}
+
+	public void setPaused(boolean p)
+	{
+		pause = p;
+	}
+
+	public void setOver(boolean p)
+	{
+		isOver = p;
+	}
+
+	public int getDirSize()
+	{
+		return directions.size();
+	}
+
 }
