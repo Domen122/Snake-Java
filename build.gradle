@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+archivesBaseName = 'someJar'
+version = '1.0-SNAPSHOT' 
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Controler.SnekMindControl'
+    }
+}
+
+dependencies {
+   compile  'log4j:log4j:1.2.16'
+} 

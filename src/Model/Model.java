@@ -42,7 +42,6 @@ public class Model
 			Clip clip = AudioSystem.getClip();
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(getClass().getResource("/Resources/SnakeDeath.wav"));
-			System.out.println(audioInputStream);
 			clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
