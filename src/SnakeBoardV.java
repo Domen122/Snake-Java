@@ -2,11 +2,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Font;
 import javax.swing.JPanel;
 
 public class SnakeBoardV extends JPanel
 {
+	private static final long serialVersionUID = 40557434900946408L;
 	private static final Font FONT = new Font("Tahoma", Font.BOLD, 25);
 	Model model;
 

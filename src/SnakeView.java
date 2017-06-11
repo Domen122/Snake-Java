@@ -1,12 +1,9 @@
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
 
 public class SnakeView extends JFrame
 {
+	private static final long serialVersionUID = 40557434900946408L;
 	Model m;
 	SnakeBoardV boardV;
 	SnakeSideBoardV sideV;

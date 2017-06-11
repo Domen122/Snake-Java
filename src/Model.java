@@ -4,12 +4,11 @@ import java.util.Random;
 
 public class Model
 {
-	private static final long FrameTime = 1000L / 50L;
+	private static final int FrameTime = 100;
 	public static final int MaxDirections = 3;
 	private static final int SnakeMinLength = 3;
 
 	private Snake snek;
-	private Engine engine;
 	private Board board;
 	private SideBoard side;
 	private boolean pause;
@@ -25,7 +24,6 @@ public class Model
 		snek = new Snake();
 		score_Mul = 1.0f;
 		score = 0;
-		engine = new Engine(9.0f);
 		board = new Board();
 		random = new Random();
 		directions = new LinkedList<Direction>();
@@ -39,7 +37,7 @@ public class Model
 		isNewGame = p;
 	}
 
-	public long getFrameTime()
+	public int getFrameTime()
 	{
 		return FrameTime;
 	}
@@ -80,11 +78,6 @@ public class Model
 		return isOver;
 	}
 
-	public void eUpdate()
-	{
-		engine.update();
-	}
-
 	public boolean isNewGame()
 	{
 		return isNewGame;
@@ -95,19 +88,9 @@ public class Model
 		return pause;
 	}
 
-	public boolean isEpaused()
-	{
-		return engine.isPaused();
-	}
-
-	public void setMPaused(boolean p)
-	{
-		pause = p;
-	}
-
 	public void setPaused(boolean p)
 	{
-		engine.setPaused(p);
+		pause = p;
 	}
 
 	public void setOver(boolean p)
@@ -115,16 +98,9 @@ public class Model
 		isOver = p;
 	}
 
-	public boolean hasElapsedCycle()
-	{
-		return engine.hasElapsedCycle();
-	}
-
 	public void updateGame()
 	{
 		TileType collision = updateSnake();
-		if (pause)
-			engine.setPaused(true);
 		if (collision == TileType.Fruit)
 		{
 			score += 100 * score_Mul;
@@ -133,13 +109,7 @@ public class Model
 		} else if (collision == TileType.SnakeBody)
 		{
 			isOver = true;
-			engine.setPaused(true);
 		}
-	}
-
-	public void ITSOVER()
-	{
-		isOver = true;
 	}
 
 	public void resetGame()
@@ -153,7 +123,6 @@ public class Model
 		board.setTile(head, TileType.SnakeHead);
 		directions.clear();
 		directions.add(Direction.UP);
-		engine.reset();
 		spawnFruit();
 	}
 
@@ -215,7 +184,6 @@ public class Model
 
 	public void spawnFruit()
 	{
-		int size = Board.ColumnSize * Board.RowSize - snek.getSize();
 		int index = random.nextInt(Board.ColumnSize * Board.RowSize - snek.getSize());
 		/*
 		 * this method searches for a index'th free tile, rather than randoming

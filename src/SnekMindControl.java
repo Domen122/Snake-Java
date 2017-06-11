@@ -1,34 +1,22 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SnekMindControl implements KeyListener
+public class SnekMindControl implements KeyListener, ActionListener
 {
 	Model model;
 	SnakeView view;
+	Timer timer;
 
-	void mainLoop()
+	public void actionPerformed(ActionEvent e)
 	{
-		while (true)
+		if (!model.isPaused() && !model.isGameOver())
 		{
-			long start = System.nanoTime();
-			model.eUpdate();
-			if (model.hasElapsedCycle())
-			{
-				model.updateGame();
-			}
-			view.refresh();
-			long delta = (System.nanoTime() - start) / 1000000L;
-			if (delta < model.getFrameTime())
-			{
-				try
-				{
-					Thread.sleep(model.getFrameTime() - delta);
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
+			model.updateGame();
 		}
+		view.refresh();
 	}
 
 	public void start()
@@ -38,8 +26,8 @@ public class SnekMindControl implements KeyListener
 		model.resetGame();
 		model.setPaused(true);
 		model.setNewGame(true);
-
-		mainLoop();
+		timer = new Timer(model.getFrameTime(), this);
+		timer.start();
 	}
 
 	@Override
@@ -72,18 +60,17 @@ public class SnekMindControl implements KeyListener
 		case KeyEvent.VK_P:
 			if (!model.isGameOver())
 			{
-				model.setMPaused(!model.isPaused());
+				model.setPaused(!model.isPaused());
 			}
 			break;
 		case KeyEvent.VK_ENTER:
 			if (model.isNewGame() || model.isGameOver())
 			{
 				model.resetGame();
-				model.setMPaused(false);
+				model.setPaused(false);
 			}
 			break;
 		}
-		model.setPaused(false);
 	}
 
 	@Override
