@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'Snake vol.5'
+rootProject.name = 'Snake-Java'
